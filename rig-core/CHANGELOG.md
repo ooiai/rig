@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.22.1](https://github.com/ooiai/rig/compare/rig-core-v0.22.0...rig-core-v0.22.1) - 2025-10-17
+
+### Other
+
+- add volcengine model
+- *(rig-993)* re-import all items from embeddings module in rig::embeddings ([#936](https://github.com/ooiai/rig/pull/936))
+
 ## [0.22.0](https://github.com/0xPlaygrounds/rig/compare/rig-core-v0.21.0...rig-core-v0.22.0) - 2025-10-14
 
 ### Added
