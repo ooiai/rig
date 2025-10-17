@@ -1,4 +1,3 @@
-use base64::{Engine, prelude::BASE64_STANDARD};
 use rig::completion::Prompt;
 use rig::prelude::*;
 use rig::providers::volcengine;
