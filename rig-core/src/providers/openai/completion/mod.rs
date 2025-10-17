@@ -11,8 +11,6 @@ use crate::message::{AudioMediaType, DocumentSourceKind, ImageDetail, MimeType};
 use crate::one_or_many::string_or_one_or_many;
 use crate::telemetry::{ProviderResponseExt, SpanCombinator};
 use crate::{OneOrMany, completion, json_utils, message};
-use base64::Engine;
-use base64::prelude::BASE64_STANDARD;
 use serde::{Deserialize, Serialize};
 use std::convert::Infallible;
 use std::fmt;
