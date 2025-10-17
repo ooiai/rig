@@ -1,3 +1,4 @@
+use base64::{Engine, prelude::BASE64_STANDARD};
 use rig::completion::Prompt;
 use rig::prelude::*;
 use rig::providers::volcengine;
@@ -6,7 +7,15 @@ use rig::providers::volcengine;
 async fn main() {
     // Create Volcengine client and model
     let client = volcengine::Client::from_env();
-    let agent = client.agent("ep-20250211190211-hlpsc").build();
+    // let client = volcengine::Client::builder(&key.api_key)
+    //     .base_url(&key.endpoint)
+    //     .build();
+    // let context = BASE64_STANDARD.encode("xxxxx");
+    let agent = client
+        .agent("ep-20250211190211-hlpsc")
+        .context("I'm boy")
+        .context("I'm girl")
+        .build();
 
     // Prompt the model and print its response
     let response = agent
