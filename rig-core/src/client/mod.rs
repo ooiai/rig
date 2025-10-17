@@ -268,7 +268,7 @@ mod tests {
     use crate::message::AssistantContent;
     use crate::providers::{
         anthropic, azure, cohere, deepseek, galadriel, gemini, huggingface, hyperbolic, mira,
-        moonshot, openai, openrouter, together, xai,
+        moonshot, openai, openrouter, together, volcengine, xai,
     };
     use crate::streaming::StreamingCompletion;
     use crate::tool::Tool;
@@ -476,6 +476,15 @@ mod tests {
                 factory_val: Box::new(perplexity::Client::<reqwest::Client>::from_val_boxed),
                 env_variable: "PERPLEXITY_API_KEY",
                 completion_model: Some(perplexity::SONAR),
+                ..Default::default()
+            },
+            ClientConfig {
+                name: "Volcengine",
+                factory_env: Box::new(volcengine::Client::<reqwest::Client>::from_env_boxed),
+                factory_val: Box::new(volcengine::Client::<reqwest::Client>::from_val_boxed),
+                env_variable: "VOLCENGINE_API_KEY",
+                embeddings_model: Some(volcengine::TEXT_DOUBAO_EMBEDDING),
+                completion_model: Some(volcengine::DOUBAO_SEED),
                 ..Default::default()
             },
         ]

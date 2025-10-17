@@ -62,5 +62,6 @@ pub mod openai;
 pub mod openrouter;
 pub mod perplexity;
 pub mod together;
+pub mod volcengine;
 pub mod voyageai;
 pub mod xai;
