@@ -267,8 +267,8 @@ mod tests {
     use crate::image_generation::ImageGenerationRequest;
     use crate::message::AssistantContent;
     use crate::providers::{
-        anthropic, azure, cohere, deepseek, galadriel, gemini, huggingface, hyperbolic, mira,
-        moonshot, openai, openrouter, together, volcengine, xai,
+        anthropic, azure, bailian, cohere, deepseek, galadriel, gemini, huggingface, hyperbolic,
+        mira, moonshot, openai, openrouter, together, volcengine, xai,
     };
     use crate::streaming::StreamingCompletion;
     use crate::tool::Tool;
@@ -485,6 +485,15 @@ mod tests {
                 env_variable: "VOLCENGINE_API_KEY",
                 embeddings_model: Some(volcengine::TEXT_DOUBAO_EMBEDDING),
                 completion_model: Some(volcengine::DOUBAO_SEED),
+                ..Default::default()
+            },
+            ClientConfig {
+                name: "Bailian",
+                factory_env: Box::new(bailian::Client::<reqwest::Client>::from_env_boxed),
+                factory_val: Box::new(bailian::Client::<reqwest::Client>::from_val_boxed),
+                env_variable: "BAILIAN_API_KEY",
+                embeddings_model: Some(bailian::TEXT_EMBEDDING_V4),
+                completion_model: Some(bailian::QWEN3_MAX),
                 ..Default::default()
             },
         ]
