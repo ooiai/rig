@@ -268,7 +268,7 @@ mod tests {
     use crate::message::AssistantContent;
     use crate::providers::{
         anthropic, azure, bailian, cohere, deepseek, galadriel, gemini, huggingface, hyperbolic,
-        mira, moonshot, openai, openrouter, together, volcengine, xai,
+        mira, moonshot, openai, openrouter, tei, together, volcengine, xai,
     };
     use crate::streaming::StreamingCompletion;
     use crate::tool::Tool;
@@ -494,6 +494,14 @@ mod tests {
                 env_variable: "BAILIAN_API_KEY",
                 embeddings_model: Some(bailian::TEXT_EMBEDDING_V4),
                 completion_model: Some(bailian::QWEN3_MAX),
+                ..Default::default()
+            },
+            ClientConfig {
+                name: "Tei",
+                factory_env: Box::new(tei::Client::<reqwest::Client>::from_env_boxed),
+                factory_val: Box::new(tei::Client::<reqwest::Client>::from_val_boxed),
+                env_variable: "TEI_API_KEY",
+                embeddings_model: Some(tei::TEI_TEXT_EMBEDDING),
                 ..Default::default()
             },
         ]
