@@ -395,12 +395,26 @@ impl completion::CompletionModel for CompletionModel<reqwest::Client> {
         let preamble = request.preamble.clone();
         let mut request = self.create_completion_request(request)?;
 
+        // Ark chat streaming: same flags as OpenAI-compatible
+        request = merge(
+            request,
+            json!({"stream": true, "stream_options": {"include_usage": true}}),
+        );
+
+        let req_body = serde_json::to_vec(&request)?;
+
+        let req = self
+            .client
+            .post("/chat/completions")?
+            .body(req_body)
+            .map_err(|e| CompletionError::HttpError(e.into()))?;
+
         let span = if tracing::Span::current().is_disabled() {
             info_span!(
                 target: "rig::completions",
                 "chat_streaming",
                 gen_ai.operation.name = "chat_streaming",
-                gen_ai.provider.name = "bailian",
+                gen_ai.provider.name = "volcengine",
                 gen_ai.request.model = self.model,
                 gen_ai.system_instructions = preamble,
                 gen_ai.response.id = tracing::field::Empty,
@@ -414,17 +428,11 @@ impl completion::CompletionModel for CompletionModel<reqwest::Client> {
             tracing::Span::current()
         };
 
-        // OpenAI-compatible streaming flags
-        request = merge(
-            request,
-            json!({"stream": true, "stream_options": {"include_usage": true}}),
-        );
-
-        let builder = self.client.reqwest_post("/chat/completions").json(&request);
-
-        send_compatible_streaming_request(builder)
-            .instrument(span)
-            .await
+        tracing::Instrument::instrument(
+            send_compatible_streaming_request(self.client.http_client.clone(), req),
+            span,
+        )
+        .await
     }
 }
 
