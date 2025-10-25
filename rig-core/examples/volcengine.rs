@@ -12,8 +12,8 @@ async fn main() {
     // let context = BASE64_STANDARD.encode("xxxxx");
     let agent = client
         .agent("ep-20250211190211-hlpsc")
-        .context("I'm boy")
-        .context("I'm girl")
+        // .context("I'm boy")
+        // .context("I'm girl")
         .build();
 
     // Prompt the model and print its response
